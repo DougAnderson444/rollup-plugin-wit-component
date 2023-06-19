@@ -1,18 +1,12 @@
-# create-svelte
+# Rollup Plugin WIT (WebAssembly Interface Types) Component
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+This plugin allows you to take a WebAssembly component and import it into the browser.
 
-## Creating a project
+Rollup uses this plugin to fetch and bundle all the dependencies into one file. It also converts generated \*.wasm bytes into local URLs and replaces the imports with the URLs.
 
-If you're seeing this, you've probably already done this step. Congrats!
+In the end, you get an ES Module with your Wasm functions exported.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+You're welcome. I accept cash 💸, VISA, and Mastercard 💳.
 
 ## Developing
 
