@@ -1,5 +1,7 @@
 import { sleep } from 'yootils';
 
+export let packagesUrl = 'https://unpkg.com';
+
 const fetch_cache = new Map();
 
 async function fetch_if_uncached(url) {
@@ -39,6 +41,7 @@ const decoder = new TextDecoder();
 export const plugin = (files) => ({
 	name: 'loader',
 	async resolveId(importee, importer) {
+		console.log('resolveId', { importee }, { importer });
 		// importing from provided data
 		if (files.find((file) => file[0] == importee)) {
 			return importee;
@@ -56,11 +59,6 @@ export const plugin = (files) => ({
 			return await follow_redirects(url);
 		} else {
 			// fetch from unpkg
-			if (importer in lookup) {
-				const match = /^(@[^/]+\/)?[^/]+/.exec(importee);
-				if (match) imports.add(match[0]);
-			}
-
 			try {
 				const pkg_url = await follow_redirects(`${packagesUrl}/${importee}/package.json`);
 				const pkg_json = (await fetch_if_uncached(pkg_url)).body;
