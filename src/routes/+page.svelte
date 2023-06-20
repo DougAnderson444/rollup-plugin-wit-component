@@ -34,9 +34,10 @@
 			}
 		);
 
+		let name = 'hello-world';
 		// see jco/cmd/transpile.js
 		let opts = {
-			name: 'hello-world',
+			name,
 			map: Object.entries(map ?? {}),
 			instantiation: false,
 			validLiftingOptimization: false,
@@ -50,7 +51,7 @@
 		console.log({ files, imports, exports });
 
 		code = await rollup({
-			input: 'hello-world.js',
+			input: name + '.js',
 			plugins: [plugin(files)]
 		})
 			.then((bundle) => bundle.generate({ format: 'es' }))
@@ -68,7 +69,7 @@
 </script>
 
 <svelte:head>
-	<title>Rollup Plugin</title>
+	<title>Rollup Plugin WIT Demo</title>
 </svelte:head>
 
 {#if whatSayYou}
