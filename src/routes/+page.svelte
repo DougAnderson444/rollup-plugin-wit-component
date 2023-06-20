@@ -3,7 +3,6 @@
 	import { onMount } from 'svelte';
 	import { rollup } from '@rollup/browser';
 
-	import { generate } from '$lib/bindgenComp/js-component-bindgen-component.js';
 	// @ts-ignore
 	import wasm from './hello.world.comp.wasm?url';
 
@@ -17,6 +16,11 @@
 	let code;
 
 	onMount(async () => {
+
+		const bindgen = await import('$lib/bindgenComp/js-component-bindgen-component.js');
+		await bindgen.$init; // wait for wasm to initialize in the browser
+		const { generate } = bindgen;
+
 		// get wasm bytes from url
 		let wasmBytes = await fetch(wasm).then((res) => res.arrayBuffer());
 
