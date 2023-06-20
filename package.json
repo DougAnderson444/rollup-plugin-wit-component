@@ -5,7 +5,11 @@
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
-			"svelte": "./dist/index.js"
+			"default": "./dist/index.js"
+		},
+		"./bindgen": {
+			"types": "./dist/bindgen.d.ts",
+			"default": "./dist/bindgenComp/js-component-bindgen-component.js"
 		}
 	},
 	"scripts": {
