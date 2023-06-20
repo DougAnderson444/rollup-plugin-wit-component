@@ -17,7 +17,7 @@
 	/**
 	 * @type {string}
 	 */
-	let code;
+	let code = "Standby, generating your bundle...";
 
 	onMount(async () => {
 
