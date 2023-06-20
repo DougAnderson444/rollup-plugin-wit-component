@@ -34,15 +34,13 @@ async function follow_redirects(url) {
 	return res.url;
 }
 
-export const plugin = (modules) => ({
+const decoder = new TextDecoder();
+
+export const plugin = (files) => ({
 	name: 'loader',
 	async resolveId(importee, importer) {
-		if (importee.endsWith('.wasm')) {
-			return path.resolve(path.dirname(importer), importee);
-		}
-
 		// importing from provided data
-		if (modules.hasOwnProperty(importee)) {
+		if (files.find((file) => file[0] == importee)) {
 			return importee;
 		}
 
@@ -82,8 +80,9 @@ export const plugin = (modules) => ({
 		return importee; // catch all
 	},
 	async load(id) {
-		if (modules.hasOwnProperty(id)) {
-			return modules[id];
+		let match = files.find((file) => file[0] == id); // If no values satisfy the testing function, undefined is returned.
+		if (match) {
+			return decoder.decode(match[1]);
 		}
 
 		const res = await fetch_if_uncached(id);
@@ -102,15 +101,17 @@ export const plugin = (modules) => ({
 		// match and replace any './' with "" from the file name
 		fileName = fileName.replace('./', '');
 
-		// make a blob url of the bytes of the wasm file from modules[fileName]
-		let wasmBlobUrl = URL.createObjectURL(
-			new Blob([modules[fileName]], { type: 'application/wasm' })
-		);
+		let match = files.find((file) => file[0] == fileName); // If no values satisfy the testing function, undefined is returned.
+
+		if (!match) return;
+
+		// make a blob url of the bytes of the wasm file
+		let wasmBlobUrl = URL.createObjectURL(new Blob([match[1]], { type: 'application/wasm' }));
 
 		// return if undefined
 		if (!wasmBlobUrl || wasmBlobUrl == 'undefined') return;
 
-		// find and replace new URL('./hello-world.core.wasm', import.meta.url) with a Blob URL of the bytes from modules[fileName]
+		// find and replace new URL('./hello-world.core.wasm', import.meta.url) with a Blob URL of the bytes
 		code = code.replace(/new URL\('.*', import.meta.url\)/g, `'${wasmBlobUrl}'`);
 
 		return {

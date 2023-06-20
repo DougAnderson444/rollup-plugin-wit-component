@@ -1,5 +1,5 @@
 <script>
-	import { plugin } from '$lib';
+	import { plugin } from 'rollup-plugin-wit-component';
 	import { onMount } from 'svelte';
 	import { rollup } from '@rollup/browser';
 
@@ -17,7 +17,7 @@
 
 	onMount(async () => {
 
-		const bindgen = await import('$lib/bindgenComp/js-component-bindgen-component.js');
+		const bindgen = await import('rollup-plugin-wit-component/bindgen');
 		await bindgen.$init; // wait for wasm to initialize in the browser
 		const { generate } = bindgen;
 
@@ -49,22 +49,9 @@
 
 		console.log({ files, imports, exports });
 
-		// go through files, imports, and exports arrays and take element[0] make it the key, and element[1] the value
-		// then pass that into rollup
-		const decoder = new TextDecoder();
-		let modules = Object.fromEntries(
-			files.map((/** @type {any[]} */ element) => {
-				if (element[0].endsWith('.js') || element[0].endsWith('.ts')) {
-					return [element[0], decoder.decode(element[1])];
-				} else {
-					return [element[0], element[1]];
-				}
-			})
-		);
-
 		code = await rollup({
 			input: 'hello-world.js',
-			plugins: [plugin(modules)]
+			plugins: [plugin(files)]
 		})
 			.then((bundle) => bundle.generate({ format: 'es' }))
 			.then(({ output }) => output[0].code);
