@@ -4,7 +4,11 @@
 	import { rollup } from '@rollup/browser';
 
 	// @ts-ignore
-	import wasm from './hello.world.comp.wasm?url';
+	// import wasm from './hello.world.comp.wasm?url';
+	import wasm from './cargo_comp.wasm?url';
+
+	// get imports as a string
+	import importables from './importables.js?raw';
 
 	/**
 	 * @type {string | null}
@@ -24,13 +28,19 @@
 		// get wasm bytes from url
 		let wasmBytes = await fetch(wasm).then((res) => res.arrayBuffer());
 
+		let importName = './importables.js'
+		// You could Rollup the bytes of these files instead of uses a CDN. Designer's choice.
 		let map = Object.assign(
 			{
-				'wasi:*': 'https://unpkg.com/@bytecodealliance/preview2-shim@0.0.9/lib/browser/*'
+				// https://unpkg.com/browse/@bytecodealliance/preview2-shim@0.0.9/package.json
+				// https://unpkg.com/@bytecodealliance/preview2-shim@0.0.9/lib/browser/index.js
+				// https://unpkg.com/@bytecodealliance/preview2-shim@0.0.9/lib/browser/io.js
+				// 'wasi:*': 'https://unpkg.com/@bytecodealliance/preview2-shim@0.0.9/lib/browser/*' // also works
+				'wasi:*': '@bytecodealliance/preview2-shim@0.0.9/lib/browser/*' // plugin will us unpkg to resolve
 			},
 			{
 				// specify location of imported functions, if applicable
-				// 'component:cargo-comp': `http://localhost:5173/ipns-pubsub.js`
+				'component:cargo-comp': importName
 			}
 		);
 
@@ -47,12 +57,11 @@
 		};
 		// pass into generate along with bytes
 		let { files, imports, exports } = generate(wasmBytes, opts);
-
 		console.log({ files, imports, exports });
 
 		code = await rollup({
 			input: name + '.js',
-			plugins: [plugin(files)]
+			plugins: [plugin([...files, [importName,  importables]])]
 		})
 			.then((bundle) => bundle.generate({ format: 'es' }))
 			.then(({ output }) => output[0].code);
