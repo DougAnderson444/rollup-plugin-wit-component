@@ -3,7 +3,7 @@ import { filesystemFilesystem as interface0 } from '@bytecodealliance/preview2-s
 import { ioStreams as interface6 } from '@bytecodealliance/preview2-shim/io';
 import { randomRandom as interface15 } from '@bytecodealliance/preview2-shim/random';
 
-const base64Compile = str => WebAssembly.compile(typeof Buffer !== 'undefined' ? Buffer.from(str, 'base64') : Uint8Array.from(atob(str), b => b.charCodeAt(0)));
+const base64Compile = str => WebAssembly.compile(Uint8Array.from(atob(str), b => b.charCodeAt(0)));
 
 class ComponentError extends Error {
   constructor (value) {
@@ -16,15 +16,7 @@ class ComponentError extends Error {
 let dv = new DataView(new ArrayBuffer());
 const dataView = mem => dv.buffer === mem.buffer ? dv : dv = new DataView(mem.buffer);
 
-const isNode = typeof process !== 'undefined' && process.versions && process.versions.node;
-let _fs;
-async function fetchCompile (url) {
-  if (isNode) {
-    _fs = _fs || await import('fs/promises');
-    return WebAssembly.compile(await _fs.readFile(url));
-  }
-  return fetch(url).then(WebAssembly.compileStreaming);
-}
+const fetchCompile = url => fetch(url).then(WebAssembly.compileStreaming);
 
 function getErrorPayload(e) {
   if (e && hasOwnProperty.call(e, 'payload')) return e.payload;
@@ -34,6 +26,10 @@ function getErrorPayload(e) {
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 
 const instantiateCore = WebAssembly.instantiate;
+
+function throwUninitialized() {
+  throw new TypeError('Wasm uninitialized use `await $init` first');
+}
 
 const toUint64 = val => BigInt.asUintN(64, val);
 
@@ -1570,6 +1566,7 @@ let postReturn0;
 let postReturn1;
 
 function generate(arg0, arg1) {
+  if (!_initialized) throwUninitialized();
   const ptr0 = realloc1(0, 0, 4, 48);
   const val1 = arg0;
   const len1 = val1.byteLength;
@@ -1746,6 +1743,7 @@ function generate(arg0, arg1) {
 }
 
 function generateTypes(arg0, arg1) {
+  if (!_initialized) throwUninitialized();
   const ptr0 = utf8Encode(arg0, realloc1, memory0);
   const len0 = utf8EncodedLen;
   const {wit: v1_0, world: v1_1, tlaCompat: v1_2, instantiation: v1_3, map: v1_4 } = arg1;
@@ -1901,7 +1899,8 @@ function generateTypes(arg0, arg1) {
 
 export { generate, generateTypes }
 
-const $init = (async() => {
+let _initialized = false;
+export const $init = (async() => {
   const module0 = fetchCompile(new URL('./js-component-bindgen-component.core.wasm', import.meta.url));
   const module1 = fetchCompile(new URL('./js-component-bindgen-component.core2.wasm', import.meta.url));
   const module2 = base64Compile('AGFzbQEAAAABUgxgAX8AYAN/fn8AYAJ/fwBgCH9/f39/f39/AGACfn8AYAR/f39/AGACf38Bf2AEf39/fwF/YAl/f39/f35+f38Bf2ABfwF/YAN/f38Bf2ABfwADGRgAAQECAgIDBAABAQUFBgcHCAYGBgkGCgsEBQFwARgYB3oZATAAAAExAAEBMgACATMAAwE0AAQBNQAFATYABgE3AAcBOAAIATkACQIxMAAKAjExAAsCMTIADAIxMwANAjE0AA4CMTUADwIxNgAQAjE3ABECMTgAEgIxOQATAjIwABQCMjEAFQIyMgAWAjIzABcIJGltcG9ydHMBAArNAhgJACAAQQARAAALDQAgACABIAJBAREBAAsNACAAIAEgAkECEQEACwsAIAAgAUEDEQIACwsAIAAgAUEEEQIACwsAIAAgAUEFEQIACxcAIAAgASACIAMgBCAFIAYgB0EGEQMACwsAIAAgAUEHEQQACwkAIABBCBEAAAsNACAAIAEgAkEJEQEACw0AIAAgASACQQoRAQALDwAgACABIAIgA0ELEQUACw8AIAAgASACIANBDBEFAAsLACAAIAFBDREGAAsPACAAIAEgAiADQQ4RBwALDwAgACABIAIgA0EPEQcACxkAIAAgASACIAMgBCAFIAYgByAIQRARCAALCwAgACABQRERBgALCwAgACABQRIRBgALCwAgACABQRMRBgALCQAgAEEUEQkACwsAIAAgAUEVEQYACw0AIAAgASACQRYRCgALCQAgAEEXEQsACwAuCXByb2R1Y2VycwEMcHJvY2Vzc2VkLWJ5AQ13aXQtY29tcG9uZW50BjAuMTEuMAC8CARuYW1lABMSd2l0LWNvbXBvbmVudDpzaGltAZ8IGAAvaW5kaXJlY3Qtd2FzaTpjbGktYmFzZS9wcmVvcGVucy1nZXQtZGlyZWN0b3JpZXMBM2luZGlyZWN0LXdhc2k6ZmlsZXN5c3RlbS9maWxlc3lzdGVtLXJlYWQtdmlhLXN0cmVhbQI0aW5kaXJlY3Qtd2FzaTpmaWxlc3lzdGVtL2ZpbGVzeXN0ZW0td3JpdGUtdmlhLXN0cmVhbQM1aW5kaXJlY3Qtd2FzaTpmaWxlc3lzdGVtL2ZpbGVzeXN0ZW0tYXBwZW5kLXZpYS1zdHJlYW0ELGluZGlyZWN0LXdhc2k6ZmlsZXN5c3RlbS9maWxlc3lzdGVtLWdldC10eXBlBShpbmRpcmVjdC13YXNpOmZpbGVzeXN0ZW0vZmlsZXN5c3RlbS1zdGF0BitpbmRpcmVjdC13YXNpOmZpbGVzeXN0ZW0vZmlsZXN5c3RlbS1vcGVuLWF0ByxpbmRpcmVjdC13YXNpOnJhbmRvbS9yYW5kb20tZ2V0LXJhbmRvbS1ieXRlcwgyaW5kaXJlY3Qtd2FzaTpjbGktYmFzZS9lbnZpcm9ubWVudC1nZXQtZW52aXJvbm1lbnQJHWluZGlyZWN0LXdhc2k6aW8vc3RyZWFtcy1yZWFkCiZpbmRpcmVjdC13YXNpOmlvL3N0cmVhbXMtYmxvY2tpbmctcmVhZAseaW5kaXJlY3Qtd2FzaTppby9zdHJlYW1zLXdyaXRlDCdpbmRpcmVjdC13YXNpOmlvL3N0cmVhbXMtYmxvY2tpbmctd3JpdGUNLGFkYXB0LXdhc2lfc25hcHNob3RfcHJldmlldzEtZmRfZmlsZXN0YXRfZ2V0DiRhZGFwdC13YXNpX3NuYXBzaG90X3ByZXZpZXcxLWZkX3JlYWQPJWFkYXB0LXdhc2lfc25hcHNob3RfcHJldmlldzEtZmRfd3JpdGUQJmFkYXB0LXdhc2lfc25hcHNob3RfcHJldmlldzEtcGF0aF9vcGVuESdhZGFwdC13YXNpX3NuYXBzaG90X3ByZXZpZXcxLXJhbmRvbV9nZXQSKGFkYXB0LXdhc2lfc25hcHNob3RfcHJldmlldzEtZW52aXJvbl9nZXQTLmFkYXB0LXdhc2lfc25hcHNob3RfcHJldmlldzEtZW52aXJvbl9zaXplc19nZXQUJWFkYXB0LXdhc2lfc25hcHNob3RfcHJldmlldzEtZmRfY2xvc2UVK2FkYXB0LXdhc2lfc25hcHNob3RfcHJldmlldzEtZmRfcHJlc3RhdF9nZXQWMGFkYXB0LXdhc2lfc25hcHNob3RfcHJldmlldzEtZmRfcHJlc3RhdF9kaXJfbmFtZRcmYWRhcHQtd2FzaV9zbmFwc2hvdF9wcmV2aWV3MS1wcm9jX2V4aXQ');
@@ -2004,6 +2003,5 @@ const $init = (async() => {
   realloc1 = exports1.cabi_realloc;
   postReturn0 = exports1.cabi_post_generate;
   postReturn1 = exports1['cabi_post_generate-types'];
+  _initialized = true;
 })();
-
-await $init;

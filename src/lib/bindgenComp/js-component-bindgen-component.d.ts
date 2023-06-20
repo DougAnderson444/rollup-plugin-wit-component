@@ -10,3 +10,5 @@ import { IoStreams as IoStreamsImports } from './imports/io-streams';
 import { RandomRandom as RandomRandomImports } from './imports/random-random';
 export function generate(component: Uint8Array | ArrayBuffer, options: GenerateOptions): Transpiled;
 export function generateTypes(name: string, options: TypeGenerationOptions): Files;
+
+export const $init: Promise<void>;

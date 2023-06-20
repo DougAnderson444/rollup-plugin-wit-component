@@ -15,3 +15,5 @@ export function componentWit(binary: Uint8Array | ArrayBuffer): string;
 export function componentEmbed(embedOpts: EmbedOpts): Uint8Array;
 export function metadataShow(binary: Uint8Array | ArrayBuffer): ModuleMetadata[];
 export function metadataAdd(binary: Uint8Array | ArrayBuffer, metadata: ProducersFields): Uint8Array;
+
+export const $init: Promise<void>;
