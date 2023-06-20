@@ -119,3 +119,5 @@ export const plugin = (modules) => ({
 		};
 	}
 });
+
+export default plugin;
