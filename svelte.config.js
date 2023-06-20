@@ -20,6 +20,11 @@ const config = {
 		}),
 		paths: {
 			base: dev ? '' : process.env.BASE_PATH
+		},
+		alias: {
+			'rollup-plugin-wit-component/bindgen':
+				'src/lib/bindgenComp/js-component-bindgen-component.js',
+			'rollup-plugin-wit-component': 'src/lib/index.js'
 		}
 	},
 	preprocess: vitePreprocess()
