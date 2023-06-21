@@ -4,8 +4,8 @@
 	import { rollup } from '@rollup/browser';
 
 	// @ts-ignore
-	// import wasm wasm component bytes as a url
-	import wasmURL from './hello.component.wasm?url';
+	// Import wasm wasm component bytes as a url
+	import wasmURL from '../../target/wasm32-wasi/release/hello.wasm?url';
 
 	// get imports as a string
 	import importables from './importables.js?raw';
