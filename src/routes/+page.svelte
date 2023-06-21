@@ -4,8 +4,8 @@
 	import { rollup } from '@rollup/browser';
 
 	// @ts-ignore
-	// import wasm from './hello.world.comp.wasm?url';
-	import wasm from './cargo_comp.wasm?url';
+	// import wasm wasm component bytes as a url
+	import wasmURL from './hello.component.wasm?url';
 
 	// get imports as a string
 	import importables from './importables.js?raw';
@@ -26,7 +26,7 @@
 		const { generate } = bindgen;
 
 		// get wasm bytes from url
-		let wasmBytes = await fetch(wasm).then((res) => res.arrayBuffer());
+		let wasmBytes = await fetch(wasmURL).then((res) => res.arrayBuffer());
 
 		let importName = './importables.js'
 		// You could Rollup the bytes of these files instead of uses a CDN. Designer's choice.
