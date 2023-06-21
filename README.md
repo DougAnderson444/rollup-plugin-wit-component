@@ -26,45 +26,46 @@ const { generate } = bindgen;
 let name = 'hello-world';
 // Pick your JCO options:
 let map = Object.assign(
-    {
-        'wasi:*': 'https://unpkg.com/@bytecodealliance/preview2-shim@0.0.9/lib/browser/*'
-    },
-    {
-        // specify location of imported functions, if your wasm component imports any
-        // 'mypackage:mynamespace': `./my-imported-function.js`
-    }
+	{
+		'wasi:*': '@bytecodealliance/preview2-shim@0.0.9/lib/browser/*'
+	},
+	{
+		// specify location of imported functions, if your wasm component imports any
+		// 'mypackage:mynamespace': `./my-imported-function.js`
+	}
 );
 
 let opts = {
-    name // 'hello-world',
-    map: Object.entries(map ?? {}),
-    instantiation: false,
-    validLiftingOptimization: false,
-    noNodejsCompat: true,
-    tlaCompat: false,
-    base64Cutoff: 999999
+	name, // 'hello-world',
+	map: Object.entries(map ?? {}),
+	instantiation: false,
+	validLiftingOptimization: false,
+	noNodejsCompat: true, // no nodejs specific code
+	tlaCompat: false, // top level await or not
+	base64Cutoff: 4096 // any wasm smaller than this will be inlined as base64
 };
 
 // pass into generate along with bytes
 let { files, imports, exports } = generate(wasmBytes, opts);
 
-/// Rollup dependencies into single file so the browser can use it
+// Rollup dependencies into single file so the browser can use it
 code = await rollup({
-    input: name + '.js',
-    plugins: [plugin(files)]
+	input: name + '.js',
+	plugins: [plugin(files)]
 })
-    .then((bundle) => bundle.generate({ format: 'es' }))
-    .then(({ output }) => output[0].code);
+	.then((bundle) => bundle.generate({ format: 'es' }))
+	.then(({ output }) => output[0].code);
 
 // generate url from code blob
 let blob = new Blob([code], { type: 'text/javascript' });
 let url = URL.createObjectURL(blob);
 
+// Read ES Module from URL
 let { helloWorld } = await import(/* @vite-ignore */ url);
 
-whatSayYou = helloWorld();
+// Use the ES Module
+let whatSayYou = helloWorld();
 console.log({ whatSayYou });
-
 ```
 
 ## Developing
