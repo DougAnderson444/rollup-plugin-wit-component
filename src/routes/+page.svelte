@@ -53,7 +53,7 @@
 			validLiftingOptimization: false,
 			noNodejsCompat: true,
 			tlaCompat: false,
-			base64Cutoff: 999999
+			base64Cutoff: 4096
 		};
 		// pass into generate along with bytes
 		let { files, imports, exports } = generate(wasmBytes, opts);
@@ -70,9 +70,9 @@
 		let blob = new Blob([code], { type: 'text/javascript' });
 		let url = URL.createObjectURL(blob);
 
-		let { helloWorld } = await import(/* @vite-ignore */ url);
+		let { hello } = await import(/* @vite-ignore */ url);
 
-		whatSayYou = helloWorld();
+		whatSayYou = hello("World");
 		console.log({ whatSayYou });
 	});
 </script>
