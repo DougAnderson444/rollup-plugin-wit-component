@@ -8,6 +8,14 @@ In the end, you get an ES Module with your Wasm functions exported.
 
 You're welcome. I accept cash 💸, VISA, and Mastercard 💳.
 
+## Demo Rust -> Wasm Component
+
+A demo component written in Rust is located at [`crates/hello`](crates/hello).
+
+The interface is defined in the wit file [`crates/hello/wit/world.wit`](crates/hello/wit/world.wit).
+
+More details located in [`README.md`](crates/hello/README.md).
+
 ## Usage
 
 Demo usage is at [src/routes/+page.svelte](src/routes/+page.svelte).
@@ -61,11 +69,11 @@ let blob = new Blob([code], { type: 'text/javascript' });
 let url = URL.createObjectURL(blob);
 
 // Read ES Module from URL
-let { helloWorld } = await import(/* @vite-ignore */ url);
+let { hello } = await import(/* @vite-ignore */ url);
 
 // Use the ES Module
-let whatSayYou = helloWorld();
-console.log({ whatSayYou });
+let whatSayYou = hello('World'); // Hello, World!
+console.log({ whatSayYou }); // Hello, World!
 ```
 
 ## Developing
