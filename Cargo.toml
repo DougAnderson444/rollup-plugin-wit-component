@@ -1,2 +1,4 @@
 [workspace]
-members = ["crates/hello"]
+members = ["crates/*"]
+
+resolver = "2"
