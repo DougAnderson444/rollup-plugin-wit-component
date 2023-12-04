@@ -2,8 +2,9 @@ import { plugin } from 'rollup-plugin-wit-component';
 import { onMount } from 'svelte';
 import { rollup } from '@rollup/browser';
 
-import shimSource from './bundled/_preview2-shim.js?raw';
 import { transpile } from './bundled/_jco.js';
+
+const shimSourceURL = new URL('./bundled/_preview2-shim.js', import.meta.url);
 
 /**
  * Call this loader function to combine the wasm bytes and imports into a fully wired JavaScript module.
@@ -14,6 +15,8 @@ import { transpile } from './bundled/_jco.js';
  * @returns {Promise} - A promise that resolves to the module
  */
 export async function load(wasmBytes, importables) {
+
+  const shimSource = await fetch(shimSourceURL).then(r => r.text());
 
   /**
    * These names are all arbitary.
