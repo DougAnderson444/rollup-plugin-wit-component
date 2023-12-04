@@ -1,0 +1,13 @@
+package component:cargo-comp;
+
+interface imports {
+  prnt: func(msg: string);
+}
+
+/// An example world for the component to target.
+world example {
+
+    import imports;
+    
+    export hello: func() -> string;
+}
