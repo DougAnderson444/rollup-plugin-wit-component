@@ -1,7 +1,11 @@
-import { plugin } from './index.js';
+// transpile our wasm code into a JavaScript module
+import { transpile } from '@bytecodealliance/jco';
+// rollup our JavaScript module into a single file
 import { rollup } from '@rollup/browser';
-import { transpile } from './bundled/_jco.js';
+// ensure that our wasm code is converted to BlobUrls
+import { plugin } from './index.js';
 
+// We need the full text of the shim in order to satisfy our import requirements
 const shimSourceURL = new URL('./bundled/_preview2-shim.js', import.meta.url);
 
 /**
