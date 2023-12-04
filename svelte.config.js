@@ -23,8 +23,6 @@ const config = {
 		},
 		// add aliases via svelte.config.js (not vite.config.js or tsconfig.json), so that they are processed by svelte-package
 		alias: {
-			'rollup-plugin-wit-component/bindgen':
-				'src/lib/bindgenComp/js-component-bindgen-component.js',
 			'rollup-plugin-wit-component': 'src/lib/index.js'
 		}
 	},
