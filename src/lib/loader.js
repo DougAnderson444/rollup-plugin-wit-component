@@ -1,7 +1,5 @@
-import { plugin } from 'rollup-plugin-wit-component';
-import { onMount } from 'svelte';
+import { plugin } from './index.js';
 import { rollup } from '@rollup/browser';
-
 import { transpile } from './bundled/_jco.js';
 
 const shimSourceURL = new URL('./bundled/_preview2-shim.js', import.meta.url);
