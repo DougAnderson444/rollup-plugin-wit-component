@@ -1,6 +1,6 @@
 {
 	"name": "rollup-plugin-wit-component",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"license": "MIT",
 	"author": "DougAnderson444 <DougAnderson444@gmail.com>",
 	"description": "A rollup plugin to bundle transpiled webassembly components",
@@ -40,11 +40,11 @@
 		"svelte": "^3.54.0",
 		"svelte-check": "^3.0.1",
 		"typescript": "^5.0.0",
-		"vite": "^4.3.0",
+		"vite": "^4.3.0"
 	},
-  "dependencies": {
-		"yootils": "^0.3.1",
+	"dependencies": {
 		"@rollup/browser": "^3.25.1",
-  },
+		"yootils": "^0.3.1"
+	},
 	"type": "module"
 }
