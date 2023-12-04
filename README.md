@@ -66,7 +66,3 @@ npm run dev
 # or start the server and open the app in a new browser tab
 npm run dev -- --open
 ```
-
-### JCO Fork
-
-Note that this build uses [a fork](https://github.com/DougAnderson444/jco/tree/no-top-level-await) of `jco` until [issue #284](https://github.com/bytecodealliance/jco/issues/284) is resolved and we can use `transpile` right from `jco` in the browser.
