@@ -19,7 +19,7 @@ const config = {
 			strict: true
 		}),
 		paths: {
-			base: dev ? '' : process.env.BASE_PATH
+			base: dev ? '' : (process.env.BASE_PATH || '/rollup-plugin-wit-component')
 		},
 		// add aliases via svelte.config.js (not vite.config.js or tsconfig.json), so that they are processed by svelte-package
 		alias: {
