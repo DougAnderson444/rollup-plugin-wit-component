@@ -1,1 +1,0 @@
-C:\Users\douga\Documents2\code\rollup-plugin-wit-component\target\wasm32-wasi\release\hello.wasm: C:\Users\douga\Documents2\code\rollup-plugin-wit-component\crates\hello\src\lib.rs C:\Users\douga\Documents2\code\rollup-plugin-wit-component\target\bindings\hello\src\lib.rs
