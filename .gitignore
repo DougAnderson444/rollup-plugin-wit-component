@@ -3,14 +3,10 @@ node_modules
 /build
 /.svelte-kit
 /dist
+target/
 .env
 .env.*
 !.env.example
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-target/bindings/.lock
-target/bindings/hello/Cargo.toml
-target/bindings/hello/src/lib.rs
-target/wasm32-wasi/release/.fingerprint
-target/wasm32-wasi/release/deps
-target/release/.cargo-lock
+!target/wasm32-wasi/release/demo.wasm
