@@ -34,7 +34,7 @@ const outDir = './src/lib/bundled';
 
 export const bundleShim = async () => {
 
-  for (const entry of ['_preview2-shim', '_jco']) {
+  for (const entry of ['_preview2-shim']) {
 		console.log(`Bundling ${entry}...`);
 		await build({
 			configFile: false,
@@ -46,7 +46,7 @@ export const bundleShim = async () => {
 					name: entry
 				},
 				emptyOutDir: false,
-				minify: false, //true,
+				minify: true,
 				sourcemap: false,
 				rollupOptions: {
 					output: [
@@ -59,12 +59,12 @@ export const bundleShim = async () => {
 							name: 'app',
 							compact: true,
 							plugins: [
-              // terser()
+              terser()
             ]
 						}
 					],
 					plugins: [
-						// terser()
+						terser()
 					]
 				}
 			}

@@ -1,10 +1,7 @@
-// uses a fork due to these issues: https://github.com/DougAnderson444/jco/tree/no-top-level-await
-
-// see https://github.com/bytecodealliance/jco/issues/285
-
+// We need all of this code to be resolved and bundled
 export * from '@bytecodealliance/preview2-shim/clocks';
 export * from '@bytecodealliance/preview2-shim/filesystem';
-// For some reason the tpyes is not exported by name because it's aliased
+// For some reason the types is not exported by name because it's aliased as `filesystemTypes``
 export { types } from '@bytecodealliance/preview2-shim/filesystem';
 export * from '@bytecodealliance/preview2-shim/http';
 export * from '@bytecodealliance/preview2-shim/io';
