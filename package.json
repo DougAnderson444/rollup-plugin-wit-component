@@ -1,6 +1,6 @@
 {
 	"name": "rollup-plugin-wit-component",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"license": "MIT",
 	"author": "DougAnderson444 <DougAnderson444@gmail.com>",
 	"description": "A rollup plugin for svelte-kit to build webassembly components",
@@ -10,10 +10,6 @@
 		".": {
 			"types": "./dist/index.d.ts",
 			"default": "./dist/index.js"
-		},
-		"./bindgen": {
-			"types": "./dist/bindgen.d.ts",
-			"default": "./dist/bindgenComp/js-component-bindgen-component.js"
 		}
 	},
 	"scripts": {
@@ -27,25 +23,22 @@
 		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"devDependencies": {
+		"@rollup/browser": "^3.25.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/adapter-static": "^2.0.2",
 		"@sveltejs/kit": "^1.5.0",
+		"@sveltejs/package": "^2.2.3",
 		"dotenv": "^16.3.1",
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte": "^2.26.0",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.8.1",
+		"rollup-plugin-terser": "^7.0.2",
 		"svelte": "^3.54.0",
 		"svelte-check": "^3.0.1",
 		"typescript": "^5.0.0",
 		"vite": "^4.3.0",
 		"yootils": "^0.3.1"
 	},
-	"type": "module",
-	"dependencies": {
-		"@bytecodealliance/preview2-shim": "^0.0.9",
-		"@rollup/browser": "^3.25.1",
-		"@sveltejs/package": "^2.2.3"
-	}
 }
