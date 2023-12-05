@@ -17,8 +17,8 @@ To bundle your wit-component in the browser:
 
 ```js
 // You need to give the JavaScript code to `jco` so it can wire it up to the wasm component
-let importables = `export const prnt = function (string) {
-console.log('from importables func: ', string);
+let importableCode = `export const prnt = function (string) {
+console.log('from imported code: ', string);
 };`
 
 // Make sure you're in the Browser environment when importing the plugin
@@ -28,10 +28,13 @@ const { load } = await import('rollup-plugin-wit-component');
 // Load the wasm component bytes as an array buffer
 let wasmBytes = await fetch(wasmURL).then((res) => res.arrayBuffer());
 
+// Map the WIT interface name to the code that implements the interface
+let importables = [{ 'component:cargo-comp/imports': importableCode }];
+
 // Load the wasm component + imports to get the exported module functions
 let mod = await load(wasmBytes, importables);
 
-// mod.an_export_function() is now available
+// mod.an_export_function() is now available and can call prnt function.
 ```
 
 ## Demo
@@ -61,8 +64,10 @@ This will generate the wasm bytes at `target/wasm32-wasi/release/demo.wasm`.
 Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
 ```bash
-npm run dev
+npm run build
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+# start the server and open the app in a new browser tab
+npm run preview
 ```
+
+Note that due to the way Vite handles dynamic wasm, we cannot (yet?) use `npm run dev` to start the server.
