@@ -13,11 +13,11 @@ There is a convenience function call `load` that is exported from this library w
 
 Demo usage is at [src/routes/+page.svelte](src/routes/+page.svelte).
 
-To bundle your wit-component in the browser:
+To bundle your wit-component for the browser:
 
 ```js
 // You need to give the JavaScript code to `jco` so it can wire it up to the wasm component
-let importableCode = `export const prnt = function (string) {
+let importableCode = `export function prnt(string) {
 console.log('from imported code: ', string);
 };`
 
@@ -71,3 +71,10 @@ npm run preview
 ```
 
 Note that due to the way Vite handles dynamic wasm, we cannot (yet?) use `npm run dev` to start the server.
+
+## Publish
+
+```bash
+npm run package
+npm publish
+```

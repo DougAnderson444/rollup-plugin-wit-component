@@ -13,7 +13,7 @@
 
 	onMount(async () => {
 		// You need to give the JavaScript code to `jco` so it can wire it up to the wasm component
-		let importableCode = `export const prnt = function (string) {
+		let importableCode = `export function prnt(string) {
       console.log('from importables func: ', string);
     };`;
 
