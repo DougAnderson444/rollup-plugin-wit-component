@@ -49,7 +49,8 @@ export async function load(wasmBytes, importables = []) {
 			'wasi:cli/*': `${shimName}#*`,
 			'wasi:filesystem/*': `${shimName}#*`,
 			'wasi:io/*': `${shimName}#*`,
-			'wasi:sockets/*': `${shimName}#*`
+			'wasi:sockets/*': `${shimName}#*`,
+			'wasi:random/*': `${shimName}#*`
 		},
 		{
 			// specify location of imported functions, if applicable
@@ -65,6 +66,7 @@ export async function load(wasmBytes, importables = []) {
 		tlaCompat: false,
 		base64Cutoff: 4096
 	};
+
 	// pass into generate along with bytes
 	let { files, imports, exports } = await transpile(wasmBytes, opts);
 
