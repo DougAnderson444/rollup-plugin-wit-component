@@ -15,7 +15,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ab3cf2350ce4e1aaf711114952eb135081d936b76da37f3fe09e87f0a28cabfa"
 dependencies = [
  "cargo-component-macro",
- "wit-bindgen 0.14.0",
+ "wit-bindgen",
 ]
 
 [[package]]
@@ -34,13 +34,6 @@ name = "demo"
 version = "0.1.0"
 dependencies = [
  "cargo-component-bindings",
-]
-
-[[package]]
-name = "hello"
-version = "0.1.0"
-dependencies = [
- "wit-bindgen 0.6.0",
 ]
 
 [[package]]
@@ -77,15 +70,6 @@ name = "unicode-ident"
 version = "1.0.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3354b9ac3fae1ff6755cb6db53683adb661634f67557942dea4facebec0fee4b"
-
-[[package]]
-name = "wit-bindgen"
-version = "0.6.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ad22d93d3f55847ac4b3df31607a26f35231754ef472382319de032770d8b5bf"
-dependencies = [
- "bitflags",
-]
 
 [[package]]
 name = "wit-bindgen"
