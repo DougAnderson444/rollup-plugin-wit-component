@@ -10,6 +10,7 @@
 	// import importables from './importables.js?raw';
 
 	let whatSayYou = 'Standby, generating your bundle...';
+	let name = 'Also...';
 
 	onMount(async () => {
 		// You need to give the JavaScript code to `jco` so it can wire it up to the wasm component
@@ -26,10 +27,12 @@
 		let importables = [{ 'component:cargo-comp/imports': importableCode }];
 
 		// Load the wasm component + imports to get the exported module functions
-		let { hello } = await load(/* @vite-ignore */ wasmBytes, importables);
+		let { hello, named } = await load(/* @vite-ignore */ wasmBytes, importables);
 
 		whatSayYou = hello('World');
 		console.log({ whatSayYou });
+
+		name = named.name();
 	});
 </script>
 
@@ -39,4 +42,5 @@
 
 {#if whatSayYou}
 	<h1>{whatSayYou}</h1>
+	<span>{name}</span>
 {/if}
