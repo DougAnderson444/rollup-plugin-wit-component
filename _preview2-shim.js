@@ -8,6 +8,3 @@ export * from '@bytecodealliance/preview2-shim/io';
 export * from '@bytecodealliance/preview2-shim/random';
 export * from '@bytecodealliance/preview2-shim/sockets';
 export * from '@bytecodealliance/preview2-shim/cli';
-export * from '@bytecodealliance/preview2-shim/sockets';
-
-
