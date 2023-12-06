@@ -4,10 +4,16 @@ interface imports {
   prnt: func(msg: string);
 }
 
+interface named {
+  name: func() -> string;
+}
+
 /// An example world for the component to target.
 world example {
 
     import imports;
     
     export hello: func() -> string;
+
+    export named;
 }
