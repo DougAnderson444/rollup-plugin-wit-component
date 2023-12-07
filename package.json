@@ -1,6 +1,6 @@
 {
 	"name": "rollup-plugin-wit-component",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"license": "MIT",
 	"author": "DougAnderson444 <DougAnderson444@gmail.com>",
 	"description": "A rollup plugin to bundle transpiled webassembly components",
@@ -20,6 +20,7 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"package": "svelte-package",
+		"pack:n:publish": "npm i && npm run package && npm publish",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",

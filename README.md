@@ -74,7 +74,15 @@ Note that due to the way Vite handles dynamic wasm, we cannot (yet?) use `npm ru
 
 ## Publish
 
+Up rev the version in `package.json` and then run:
+
 ```bash
+# up revs the version in package-lock.json
+npm install
+
+# builds the dist folder
 npm run package
+
+# publishes to npm
 npm publish
 ```
