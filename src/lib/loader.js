@@ -64,7 +64,6 @@ export async function load(wasmBytes, importables = []) {
 		validLiftingOptimization: false,
 		noNodejsCompat: true,
 		tlaCompat: false,
-		noNamespacedExports: true, // using --no-namespaced-exports, see: https://github.com/rollup/rollup/issues/5286
 		base64Cutoff: 4096
 	};
 
