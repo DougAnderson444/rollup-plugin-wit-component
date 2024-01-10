@@ -1,6 +1,6 @@
 {
 	"name": "rollup-plugin-wit-component",
-	"version": "0.1.1",
+	"version": "0.1.3",
 	"license": "MIT",
 	"author": "DougAnderson444 <DougAnderson444@gmail.com>",
 	"description": "A rollup plugin to bundle transpiled webassembly components",
@@ -15,6 +15,9 @@
 			"default": "./dist/index.js"
 		}
 	},
+	"files": [
+		"dist"
+	],
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
