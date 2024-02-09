@@ -1,7 +1,9 @@
-cargo_component_bindings::generate!();
+mod bindings;
 
 use bindings::exports::component::cargo_comp::named;
 use bindings::Guest;
+
+use chrono::prelude::*;
 
 struct Component;
 
@@ -17,6 +19,7 @@ impl named::Guest for Component {
     /// Say hello!
     fn name() -> String {
         bindings::component::cargo_comp::imports::prnt("Calling prnt from Rust");
-        "There's a name here somewhere...".to_string()
+        let timestamp = Utc::now().format("%Y-%m-%d %H:%M:%S UTC").to_string();
+        format!("The timestamp is: {}", timestamp)
     }
 }
