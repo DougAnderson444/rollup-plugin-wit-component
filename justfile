@@ -9,4 +9,7 @@ npm:
   npm run build && npm run preview -- --open
 
 preview: bundle build npm
-  
+
+publish:
+  npm run package
+  npm publish
