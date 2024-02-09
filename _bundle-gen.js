@@ -12,8 +12,7 @@
 // 		cli
 // 	} from '@bytecodealliance/preview2-shim';
 // How to run this script:
-// 1. Run `npm run build` in the root of this repo.
-// 2. Run `node bundle-shim.js` in this directory.
+// 2. Run `node _bundle-gen.js` in this directory.
 // 3. Commit the changes to shim-bundle.js.
 // 4. Run `npm run build` in the root of this repo again.
 // 5. Commit the changes to the rest of the files.
@@ -24,12 +23,11 @@
 import { build } from 'vite';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 import fs from 'fs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const entryPath = path.join(__dirname, 'shim.js');
 const outDir = './src/lib/bundled';
 
 export const bundleShim = async () => {
