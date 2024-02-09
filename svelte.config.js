@@ -1,5 +1,5 @@
 import adapter from '@sveltejs/adapter-static';
-import { vitePreprocess } from '@sveltejs/kit/vite';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import 'dotenv/config';
 
 const dev = process.argv.includes('dev');
@@ -26,7 +26,7 @@ const config = {
 			'rollup-plugin-wit-component': 'src/lib/index.js'
 		}
 	},
-	preprocess: vitePreprocess()
+  preprocess: [vitePreprocess()]
 };
 
 export default config;
