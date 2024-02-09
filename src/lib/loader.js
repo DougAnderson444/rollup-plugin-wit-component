@@ -50,7 +50,8 @@ export async function load(wasmBytes, importables = []) {
 			'wasi:filesystem/*': `${shimName}#*`,
 			'wasi:io/*': `${shimName}#*`,
 			'wasi:sockets/*': `${shimName}#*`,
-			'wasi:random/*': `${shimName}#*`
+			'wasi:random/*': `${shimName}#*`,
+      'wasi:clocks/*': `${shimName}#*`,
 		},
 		{
 			// specify location of imported functions, if applicable
