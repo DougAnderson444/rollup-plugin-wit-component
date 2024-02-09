@@ -9,6 +9,8 @@ In the end, you get an ES Module with your Wasm functions exported.
 
 ## Usage
 
+See the [example](./src/routes/+page.svelte) for the latest usage.
+
 There is a convenience function call `load` that is exported from this library which makes combining `.wasm` bytes and `importables` easy. All you need are your wasm bytes and your importable functions.
 
 Demo usage is at [src/routes/+page.svelte](src/routes/+page.svelte).
@@ -52,6 +54,16 @@ Ensure you have [`cargo-component`](https://github.com/bytecodealliance/cargo-co
 ```bash
 cargo install cargo-component
 ```
+
+### Just Commands
+
+You can bundle, build, and run preview all with a single [just](https:://just.systems) command from the [justfile](./justfile):
+
+```bash
+just preview
+```
+
+### Manual Build:
 
 [Build the demo crate](crates/demo/README.md) with
 
