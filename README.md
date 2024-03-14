@@ -1,6 +1,6 @@
 # Rollup Plugin WIT (WebAssembly Interface Types) Component
 
-When [`jco`](https://github.com/bytecodealliance/jco/) transpiles a WebAssembly Interface Types (WIT) component, it generates a number of `.js` and `.wasm` files. These files need to be bundled together to be used in the browser. Notably, the `.wasm` file needs to be converted to a Blob URL and the `.js` files need to be bundled together. This package includes a plugin which finds the `.wasm` files and transforms them into Blob URLs so they can be resolved by fetching that URL in the bundled `.js` file.
+When [`jco`](https://github.com/bytecodealliance/jco/) transpiles a WebAssembly Interface Types (WIT) component for `wasm32-wasi` target, it generates a number of `.js` and `.wasm` files if you use the `wasi` shims (like `clocks`, `random`, etc.). These files need to be bundled together to be used in the browser. Notably, the `.wasm` file needs to be converted to a Blob URL and the `.js` files need to be bundled together. This package includes a plugin which finds the `.wasm` files and transforms them into Blob URLs so they can be resolved by fetching that URL in the bundled `.js` file.
 
 Thus, this plugin allows you to take WebAssembly component bytes and import it into the browser.
 
