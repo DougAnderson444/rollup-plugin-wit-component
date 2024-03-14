@@ -33,8 +33,9 @@ export async function load(wasmBytes, importables = []) {
 		(acc, current) => {
 			let name = Object.keys(current)[0];
 			let code = current[name];
-			let filePath = './' + name.replace(':', '_').replace(/\//g, '_') + '.js';
-			acc[0][name] = filePath;
+			let globImportPattern = /\/\*$/;
+			let filePath = './' + name.replace(globImportPattern, '').replace(':', '_').replace(/\//g, '_') + '.js';
+			acc[0][name] = filePath + (name.match(globImportPattern) ? '#*': '');
 			acc[1].push([filePath, code]);
 			return acc;
 		},
@@ -51,7 +52,7 @@ export async function load(wasmBytes, importables = []) {
 			'wasi:io/*': `${shimName}#*`,
 			'wasi:sockets/*': `${shimName}#*`,
 			'wasi:random/*': `${shimName}#*`,
-      'wasi:clocks/*': `${shimName}#*`,
+			'wasi:clocks/*': `${shimName}#*`,
 		},
 		{
 			// specify location of imported functions, if applicable
