@@ -8,5 +8,6 @@ prev: build
   npm run build && npm run preview -- --open
 
 publish:
+  npm install
   npm run package
   npm publish
