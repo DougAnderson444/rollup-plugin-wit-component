@@ -82,10 +82,13 @@ export async function load(wasmBytes, importables = []) {
 		.then(({ output }) => output[0].code);
 
 	// generate url from code blob
-	let blob = new Blob([code], { type: 'application/javascript' });
-	let url = URL.createObjectURL(blob);
+	// let blob = new Blob([code], { type: 'application/javascript' });
+	// let url = URL.createObjectURL(blob);
 
-	let mod = await import(/* @vite-ignore */ url);
+	// use a data url instead of a blob url, so it works without issue inside a web worker
+	let dataUrl = `data:application/javascript,${encodeURIComponent(code)}`;
+
+	let mod = await import(/* @vite-ignore */ dataUrl);
 
 	return mod;
 }
