@@ -2,13 +2,10 @@ bundle:
   node _bundle-gen.js
 
 build: 
-  cargo component build
-  cargo component build --release
+  cargo component build --workspace --release
 
-npm:
+prev: build
   npm run build && npm run preview -- --open
-
-preview: bundle build npm
 
 publish:
   npm run package
