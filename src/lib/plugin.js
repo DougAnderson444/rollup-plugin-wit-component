@@ -104,13 +104,19 @@ export const plugin = (files) => ({
 			if (!found) return;
 
 			// make a blob url of the bytes of the wasm file
-			let wasmBlobUrl = URL.createObjectURL(new Blob([found[1]], { type: 'application/wasm' }));
+			// let wasmUrl = URL.createObjectURL(new Blob([found[1]], { type: 'application/wasm' }));
+
+			// Necessary to load an insecure wasm file in a secure context like HTTPS when used in a worker
+			// TODO: Give the user option, as this base64 will be bigger than the Blob method.
+			let wasmUrl = `data:application/wasm;base64,${btoa(
+				String.fromCharCode(...new Uint8Array(found[1]))
+			)}`;
 
 			// return if undefined
-			if (!wasmBlobUrl || wasmBlobUrl == 'undefined') return;
+			if (!wasmUrl || wasmUrl == 'undefined') return;
 
 			// find and replace
-			code = code.replace(`new URL('./${fileName}', import.meta.url)`, `'${wasmBlobUrl}'`);
+			code = code.replace(`new URL('./${fileName}', import.meta.url)`, `'${wasmUrl}'`);
 		});
 
 		return {
