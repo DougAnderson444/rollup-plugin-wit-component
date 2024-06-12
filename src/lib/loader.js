@@ -34,8 +34,9 @@ export async function load(wasmBytes, importables = []) {
 			let name = Object.keys(current)[0];
 			let code = current[name];
 			let globImportPattern = /\/\*$/;
-			let filePath = './' + name.replace(globImportPattern, '').replace(':', '_').replace(/\//g, '_') + '.js';
-			acc[0][name] = filePath + (name.match(globImportPattern) ? '#*': '');
+			let filePath =
+				'./' + name.replace(globImportPattern, '').replace(':', '_').replace(/\//g, '_') + '.js';
+			acc[0][name] = filePath + (name.match(globImportPattern) ? '#*' : '');
 			acc[1].push([filePath, code]);
 			return acc;
 		},
@@ -52,7 +53,7 @@ export async function load(wasmBytes, importables = []) {
 			'wasi:io/*': `${shimName}#*`,
 			'wasi:sockets/*': `${shimName}#*`,
 			'wasi:random/*': `${shimName}#*`,
-			'wasi:clocks/*': `${shimName}#*`,
+			'wasi:clocks/*': `${shimName}#*`
 		},
 		{
 			// specify location of imported functions, if applicable
@@ -81,7 +82,7 @@ export async function load(wasmBytes, importables = []) {
 		.then(({ output }) => output[0].code);
 
 	// generate url from code blob
-	let blob = new Blob([code], { type: 'text/javascript' });
+	let blob = new Blob([code], { type: 'application/javascript' });
 	let url = URL.createObjectURL(blob);
 
 	let mod = await import(/* @vite-ignore */ url);
