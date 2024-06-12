@@ -10,3 +10,4 @@ target/
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 !target/wasm32-wasi/release/demo.wasm
+docs
