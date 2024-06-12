@@ -6,6 +6,7 @@ use bindings::Guest;
 use chrono::prelude::*;
 
 struct Component;
+bindings::export!(Component with_types_in bindings);
 
 impl Guest for Component {
     /// Say hello!
