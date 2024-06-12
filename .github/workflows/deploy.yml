@@ -26,9 +26,27 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@nightly
+        with:
+          targets: wasm32-unknown-unknown, wasm32-wasi
+          toolchain: nightly-x86_64-unknown-linux-gnu
+          components: rust-src, rustfmt
+
+      - name: Install binstall
+        uses: taiki-e/install-action@cargo-binstall
+
+      - name: Install cargo-component v0.7.0
+        run: echo yes | cargo binstall cargo-component@0.13.2
+
+      - name: Cargo component build Workspace
+        run: |
+          cargo component build --workspace
+          cargo component build --workspace --release
+
       - name: build
         env:
-          BASE_PATH: '/rollup-plugin-wit-component'
+          BASE_PATH: '/${{ github.event.repository.name }}'
         run: |
           npm run build
           touch docs/.nojekyll
