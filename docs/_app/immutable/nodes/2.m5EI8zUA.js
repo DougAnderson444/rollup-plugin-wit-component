@@ -1,9 +1,0 @@
-import{_ as L}from"../chunks/preload-helper.0HuHagjb.js";import{s as R,n as f,o as A}from"../chunks/scheduler.zMJaRgub.js";import{S as N,i as q,s as S,m as c,n as B,g as r,h as v,j as m,e as _,b as d,c as u,d as h,f as b,k as w,l as y}from"../chunks/index.PHqDyT_i.js";const C=""+new URL("../assets/demo.SGpLZQmN.wasm",import.meta.url).href;function g(i){let a,o,e,t,n;return{c(){a=_("h1"),o=d(i[0]),e=S(),t=_("span"),n=d(i[1])},l(s){a=u(s,"H1",{});var l=h(a);o=b(l,i[0]),l.forEach(r),e=v(s),t=u(s,"SPAN",{});var p=h(t);n=b(p,i[1]),p.forEach(r)},m(s,l){m(s,a,l),w(a,o),m(s,e,l),m(s,t,l),w(t,n)},p(s,l){l&1&&y(o,s[0]),l&2&&y(n,s[1])},d(s){s&&(r(a),r(e),r(t))}}}function D(i){let a,o,e=i[0]&&g(i);return{c(){a=S(),e&&e.c(),o=c(),this.h()},l(t){B("svelte-1e4eiqo",document.head).forEach(r),a=v(t),e&&e.l(t),o=c(),this.h()},h(){document.title="Rollup Plugin WIT Demo"},m(t,n){m(t,a,n),e&&e.m(t,n),m(t,o,n)},p(t,[n]){t[0]?e?e.p(t,n):(e=g(t),e.c(),e.m(o.parentNode,o)):e&&(e.d(1),e=null)},i:f,o:f,d(t){t&&(r(a),r(o)),e&&e.d(t)}}}function I(i,a,o){let e="Standby, generating your bundle...",t="Also...";return A(async()=>{let n=`export function prnt(string) {
-      console.log('from importables func: ', string);
-    };`;const{load:s}=await L(()=>import("../chunks/index.PKzfIukx.js"),__vite__mapDeps([0,1]),import.meta.url);let l=await fetch(C).then(k=>k.arrayBuffer()),p=[{"component:cargo-comp/imports":n}],{hello:E,named:P}=await s(l,p);o(0,e=E("World")),console.log({whatSayYou:e}),o(1,t=P.name())}),[e,t]}class $ extends N{constructor(a){super(),q(this,a,I,D,R,{})}}export{$ as component};
-function __vite__mapDeps(indexes) {
-  if (!__vite__mapDeps.viteFileDeps) {
-    __vite__mapDeps.viteFileDeps = ["../chunks/index.PKzfIukx.js","../chunks/preload-helper.0HuHagjb.js"]
-  }
-  return indexes.map((i) => __vite__mapDeps.viteFileDeps[i])
-}
