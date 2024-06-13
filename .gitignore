@@ -9,5 +9,5 @@ target/
 !.env.example
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-!target/wasm32-wasi/release/demo.wasm
 docs
+target/wasm32-wasi/release/demo.wasm
