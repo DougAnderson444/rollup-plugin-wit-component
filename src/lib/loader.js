@@ -17,6 +17,28 @@ const shimSourceURL = new URL('./bundled/_preview2-shim.js', import.meta.url);
  * @returns {Promise} - A promise that resolves to the module
  */
 export async function load(wasmBytes, importables = []) {
+	// This is split into generate & load so that consumers can get the code with or without loading it as a module
+	let code = await generateCode(wasmBytes, importables);
+
+	// generate url from code blob
+	// let blob = new Blob([code], { type: 'application/javascript' });
+	// let url = URL.createObjectURL(blob);
+
+	let dataUrl = `data:application/javascript,${encodeURIComponent(code)}`;
+
+	let mod = await import(/* @vite-ignore */ dataUrl);
+
+	return mod;
+}
+
+/**
+ * Generate the code that can be imported. Especially useful if you want to create the Blob URLs for wasm
+ * in the main thread, but then send this code to a worker to be loaded.
+ * @param {Uint8Array} wasmBytes - The arrayBuffer bytes of the wasm file
+ * @param {String} importables - An array of objects with WIT package import name and a string of JavaScript code that exports the functions that the wasm component will us
+ * @returns {Promise} - A promise that resolves to the JavaScript code
+ */
+export async function generateCode(wasmBytes, importables = []) {
 	const shimSource = await fetch(shimSourceURL).then((r) => r.text());
 
 	/**
@@ -73,7 +95,7 @@ export async function load(wasmBytes, importables = []) {
 	// pass into generate along with bytes
 	let { files, imports, exports } = await transpile(wasmBytes, opts);
 
-	// Bundle all the imports into one file, using URLs to link to the wasm blobs
+	// Bundle all the imports into one file, using URLs to link to the wasm blobs (via plugin)
 	let code = await rollup({
 		input: name + '.js',
 		plugins: [plugin([...files, ...importables[1], [shimName, shimSource]])]
@@ -81,14 +103,5 @@ export async function load(wasmBytes, importables = []) {
 		.then((bundle) => bundle.generate({ format: 'es' }))
 		.then(({ output }) => output[0].code);
 
-	// generate url from code blob
-	// let blob = new Blob([code], { type: 'application/javascript' });
-	// let url = URL.createObjectURL(blob);
-
-	// use a data url instead of a blob url, so it works without issue inside a web worker
-	let dataUrl = `data:application/javascript,${encodeURIComponent(code)}`;
-
-	let mod = await import(/* @vite-ignore */ dataUrl);
-
-	return mod;
+	return code;
 }
