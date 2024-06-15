@@ -49,7 +49,7 @@
 		"vite": "^5.1.1"
 	},
 	"dependencies": {
-		"@bytecodealliance/jco": "^1.0.0",
+		"@bytecodealliance/jco": "^1.2.4",
 		"@rollup/browser": "^4.9.0",
 		"yootils": "^0.3.1"
 	},
